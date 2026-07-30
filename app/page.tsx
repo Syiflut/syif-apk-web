@@ -1,65 +1,149 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [words, setWords] = useState<any[]>([]);
+  const [copied, setCopied] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchNotionData() {
+      try {
+        const res = await fetch("/api/words");
+        if (res.ok) {
+          const data = await res.json();
+          setWords(data);
+        }
+      } catch (err) {
+        console.error("Failed to load words:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchNotionData();
+  }, []);
+
+  const handleCopyLink = () => {
+    if (typeof window !== "undefined") {
+      navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="min-h-screen w-full text-slate-100 font-sans selection:bg-emerald-500/30 selection:text-emerald-200 relative overflow-x-hidden bg-slate-950">
+      {/* 1. BACKGROUND FOTO GUNUNG */}
+      <img
+        src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2000&auto=format&fit=crop"
+        alt="Mountain Background"
+        className="fixed inset-0 w-full h-full object-cover object-center pointer-events-none scale-105"
+        style={{ zIndex: 0 }}
+      />
+
+      {/* 2. OVERLAY SOFT DARK GRADIENT */}
+      <div
+        className="fixed inset-0 pointer-events-none bg-gradient-to-b from-slate-950/70 via-slate-950/50 to-slate-950/80 backdrop-blur-[3px]"
+        style={{ zIndex: 1 }}
+      />
+
+      {/* 3. KONTEN UTAMA */}
+      <div
+        className="relative max-w-xl mx-auto px-5 py-16 md:py-24"
+        style={{ zIndex: 10 }}
+      >
+        {/* HEADER SECTION */}
+        <header className="mb-12 text-center flex flex-col items-center">
+          {/* Status Badge */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/40 border border-white/10 backdrop-blur-md mb-6 shadow-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+            </span>
+            <span className="font-mono text-[11px] tracking-wider text-slate-300 font-medium uppercase">
+              syif.apk_16
+            </span>
+          </div>
+
+          {/* Title */}
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-3 font-mono">
+            Syif.apk_16
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+
+          {/* Subtitle / Bio */}
+          <p className="text-slate-300/90 text-sm md:text-base leading-relaxed font-light max-w-md mx-auto">
+            Suka kata-kata, tapi lebih suka ngetik daripada nulis. Bukan
+            motivator, hanya merangkai rasa menjadi kata.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+          {/* Social & Action Links */}
+          <div className="flex items-center gap-3 mt-6">
+            <a
+              href="https://instagram.com/syif.apk_16"
+              target="_blank"
+              rel="noreferrer"
+              className="px-4 py-1.5 rounded-full bg-white/5 hover:bg-emerald-500/20 text-slate-300 hover:text-emerald-300 border border-white/10 hover:border-emerald-500/30 transition-all duration-300 text-xs font-mono backdrop-blur-md"
+            >
+              Instagram ↗
+            </a>
+
+            <button
+              onClick={handleCopyLink}
+              className="px-4 py-1.5 rounded-full bg-white/5 hover:bg-emerald-500/20 text-slate-300 hover:text-emerald-300 border border-white/10 hover:border-emerald-500/30 transition-all duration-300 text-xs font-mono backdrop-blur-md cursor-pointer"
+            >
+              {copied ? "Copied! ✨" : "Copy Link 📋"}
+            </button>
+          </div>
+        </header>
+
+        {/* LOG ENTRIES SECTION */}
+        <section className="space-y-4">
+          <div className="flex items-center justify-between text-xs font-mono text-slate-400/80 px-1 mb-2">
+            <span className="tracking-widest uppercase text-[10px] text-emerald-400/80 font-medium">
+              Recent Logs
+            </span>
+            <span className="text-[11px] text-slate-400">
+              {words.length} entries
+            </span>
+          </div>
+
+          {loading ? (
+            <div className="p-8 rounded-2xl bg-slate-900/30 border border-white/10 text-center font-mono text-xs text-slate-400 backdrop-blur-md">
+              Memuat log kata...
+            </div>
+          ) : words.length === 0 ? (
+            <div className="p-8 rounded-2xl bg-slate-900/30 border border-white/10 text-center font-mono text-xs text-slate-400 backdrop-blur-md">
+              Belum ada log kata tersimpan.
+            </div>
+          ) : (
+            words.map((item: any) => (
+              <article
+                key={item.id}
+                className="group relative p-6 rounded-2xl bg-slate-900/35 border border-white/10 backdrop-blur-lg hover:border-emerald-500/30 hover:bg-slate-900/50 transition-all duration-300 shadow-lg hover:-translate-y-0.5"
+              >
+                <div className="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
+                  <span className="text-[11px] text-slate-400 font-light">
+                    {item.date || "Log"}
+                  </span>
+                  <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-300/90 border border-emerald-500/20 text-[10px] font-medium">
+                    #{item.category}
+                  </span>
+                </div>
+
+                <p className="text-slate-100 text-base md:text-lg leading-relaxed font-serif italic tracking-wide group-hover:text-white transition-colors">
+                  "{item.word}"
+                </p>
+              </article>
+            ))
+          )}
+        </section>
+
+        {/* FOOTER */}
+        <footer className="mt-16 pt-6 border-t border-white/5 text-center font-mono text-[11px] text-slate-500">
+          <p>© {new Date().getFullYear()} Syif.apk_16 • Minimalist Journal</p>
+        </footer>
+      </div>
+    </main>
   );
 }
