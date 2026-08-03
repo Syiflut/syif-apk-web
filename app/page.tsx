@@ -62,21 +62,21 @@ export default function Home() {
 
   return (
     <main className="min-h-screen w-full text-slate-100 font-sans selection:bg-emerald-500/30 selection:text-emerald-200 relative overflow-x-hidden bg-slate-950">
-      {/* 1. BACKGROUND FOTO GUNUNG */}
+      {/* 1. BACKGROUND GAMBAR LAMPION TANGLED */}
       <img
-        src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2000&auto=format&fit=crop"
-        alt="Mountain Background"
-        className="fixed inset-0 w-full h-full object-cover object-center pointer-events-none opacity-40 scale-105" // Diterangkan sedikit dari 0.3 ke 0.4
+        src="https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=2000&auto=format&fit=crop"
+        alt="Tangled Floating Lanterns"
+        className="fixed inset-0 w-full h-full object-cover object-center pointer-events-none opacity-60 scale-105"
         style={{ zIndex: 0 }}
       />
 
-      {/* 2. OVERLAY SOFT DARK GRADIENT (Dikurangi agar lebih terang) */}
+      {/* 2. OVERLAY DARK TRANSPARAN AGAR TEKS TETAP DIBACA DENGAN JELAS */}
       <div
-        className="fixed inset-0 pointer-events-none bg-gradient-to-b from-slate-950/70 via-slate-950/50 to-slate-950/80 backdrop-blur-[2px]" // Dikurangi kegelapannya
+        className="fixed inset-0 pointer-events-none bg-gradient-to-b from-slate-950/60 via-slate-950/40 to-slate-950/70 backdrop-blur-[1px]"
         style={{ zIndex: 1 }}
       />
 
-      {/* 3. BACKGROUND INTERAKTIF DENGAN ELANG */}
+      {/* 3. EFEK LAMPION TERBANG 4D */}
       <Background3D />
 
       {/* 4. KONTEN UTAMA (Teks & Card - z-index 10) */}
