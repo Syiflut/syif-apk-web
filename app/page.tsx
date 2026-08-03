@@ -62,21 +62,21 @@ export default function Home() {
 
   return (
     <main className="min-h-screen w-full text-slate-100 font-sans selection:bg-emerald-500/30 selection:text-emerald-200 relative overflow-x-hidden bg-slate-950">
-      {/* 1. FOTO GUNUNG (Paling Belakang - z-index 0) */}
+      {/* 1. BACKGROUND FOTO GUNUNG */}
       <img
         src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2000&auto=format&fit=crop"
         alt="Mountain Background"
-        className="fixed inset-0 w-full h-full object-cover object-center pointer-events-none opacity-30 scale-105"
+        className="fixed inset-0 w-full h-full object-cover object-center pointer-events-none opacity-40 scale-105" // Diterangkan sedikit dari 0.3 ke 0.4
         style={{ zIndex: 0 }}
       />
 
-      {/* 2. OVERLAY SOFT DARK (z-index 1) */}
+      {/* 2. OVERLAY SOFT DARK GRADIENT (Dikurangi agar lebih terang) */}
       <div
-        className="fixed inset-0 pointer-events-none bg-gradient-to-b from-slate-950/80 via-slate-950/60 to-slate-950/90 backdrop-blur-[1px]"
+        className="fixed inset-0 pointer-events-none bg-gradient-to-b from-slate-950/70 via-slate-950/50 to-slate-950/80 backdrop-blur-[2px]" // Dikurangi kegelapannya
         style={{ zIndex: 1 }}
       />
 
-      {/* 3. PARTIKEL 4D / 3D INTERAKTIF (z-index 5) */}
+      {/* 3. BACKGROUND INTERAKTIF DENGAN ELANG */}
       <Background3D />
 
       {/* 4. KONTEN UTAMA (Teks & Card - z-index 10) */}
